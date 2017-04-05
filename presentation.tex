@@ -32,6 +32,11 @@ Université Laval \\
 
 \section{Définition du problème}
 \begin{frame}
+  \frametitle{Définition}
+  
+\end{frame}
+
+\begin{frame}
   \frametitle{Représentation à 5 dimensions}
   \begin{figure}
     \centering
@@ -104,8 +109,9 @@ Université Laval \\
   \frametitle{Saisie directe}
   \begin{itemize}
   \item Prédiction directe d'un point de saisie
-  \item 6 sorties: $[x, y, w, h, 2\sin(\theta), 2\cos(\theta)]$
-  \item Suppression de symétries en utilisant $(2\sin(\theta), 2\cos(\theta))$
+  \item 6 sorties: $[x, y, w, h, \sin(2\theta), \cos(2\theta)]$
+  \item Suppression de symétries en utilisant $(\sin(2\theta), \cos(2\theta))$,
+    entre -1 et 1
   \item \emph{loss} L2: $\sqrt{(x_{réel} - x_{prédit})^2 + (y_{réel} - y_{prédit})^2
     + ...}$
   \end{itemize}
@@ -117,12 +123,24 @@ Université Laval \\
   \begin{itemize}
   \item Ajout d'une sortie: classe de l'objet
   \item Problème multi-objectif
+  \item $Loss = \alpha Loss_{rectangle} + (1 - \alpha) Loss_{classification}$
+  \item Intuition: production de \emph{features} spécialisées
   \end{itemize}
 \end{frame}
 
 \begin{frame}
+  \begin{itemize}
+  \item Généralisation de la saisie directe
+  \item $N \times N \times 7$ sorties ($N = 7$)
+  \item Un paramètre supplémentaire par rectangle: probabilité
+  \end{itemize}
   \frametitle{Détection multiple (\emph{MultiGrasp})}
-  
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/multigrasp.png}
+    \caption{Visualisation de la sortie \emph{MultiGrasp}}
+    \label{fig:multigrasp}
+  \end{figure}
 \end{frame}
 
 \section{Détails d'entraînement}
