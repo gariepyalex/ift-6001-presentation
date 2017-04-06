@@ -5,8 +5,22 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{animate}
+\usepackage{gensymb}
+\usepackage{amsmath}
+\usepackage[backend=biber, style=numeric, citestyle=authoryear]{biblatex}
+\bibliography{./references}
 
 \usetheme{ulaval}
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
 
 \title[Réseaux de neurones pour saisie automatique]{Réseaux de neurones profonds pour la saisie d'objets automatisée} 
 
@@ -33,6 +47,12 @@ Université Laval \\
 \section{Définition du problème}
 \begin{frame}
   \frametitle{Définition}
+  \begin{itemize}
+  \item Problème de vision numérique
+  \item Détection de points de prise par une pince automatisée
+  \item Configuration 7D
+  \item Relaxation: configuration 5D
+  \end{itemize}
   
 \end{frame}
 
@@ -119,6 +139,10 @@ Université Laval \\
 \end{frame}
 
 \begin{frame}
+    \includegraphics[width=0.8\textwidth]{img/grasp_rectangle.png}
+\end{frame}
+
+\begin{frame}
   \frametitle{Saisie directe + classification}
   \begin{itemize}
   \item Ajout d'une sortie: classe de l'objet
@@ -129,12 +153,12 @@ Université Laval \\
 \end{frame}
 
 \begin{frame}
+  \frametitle{Détection multiple (\emph{MultiGrasp})}
   \begin{itemize}
   \item Généralisation de la saisie directe
   \item $N \times N \times 7$ sorties ($N = 7$)
   \item Un paramètre supplémentaire par rectangle: probabilité
   \end{itemize}
-  \frametitle{Détection multiple (\emph{MultiGrasp})}
   \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{img/multigrasp.png}
@@ -143,28 +167,99 @@ Université Laval \\
   \end{figure}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Détection multiple (\emph{MultiGrasp})}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/direct_vs_multi.png}
+    \caption{Comparaison de la saisie directe (en haut) et de \emph{Multigrasp}
+      (en bas)}
+    \label{fig:multigrasp_comp}
+  \end{figure}
+\end{frame}
+
 \section{Détails d'entraînement}
 \begin{frame}
   \frametitle{Pré-entraînement}
+  \begin{itemize}
+  \item Pré-entraînement sur ImageNet (3.2 millions d'images, 1000 classes)
+  \item Remplacement des couches \emph{fully-connected}
+  \item Canal de profondeur inséré dans le canal de bleu
+  \end{itemize}
   
+\end{frame}
+
+\begin{frame}
+  \frametitle{Séparation des données}
+  Deux façons de séparer les données à l'entraînement:
+  \begin{enumerate}
+  \item Par image
+  \item Par objet
+  \end{enumerate}
 \end{frame}
 
 \section{Résultats}
 \begin{frame}
   \frametitle{Métrique d'évaluation}
-  
+  Bonne saisie si:
+  \begin{enumerate}
+  \item Angle $< 30^{\circ}$ entre prédiction et \emph{ground truth}
+  \item Indice de Jaccard d'au minimum $25\%$
+  \end{enumerate}
+  \begin{align*}
+    \label{eq:jaccard}
+    J(A,B) &= \frac{|A \cap B|}{|A \cup B|}\\
+  \end{align*}
 \end{frame}
 
 \begin{frame}
   \frametitle{Résultats}
-  
+  \begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      \textbf{Architecture}&\multicolumn{2}{|c|}{\textbf{Précision}} &\textbf{Temps / Image}\\
+                           &\textbf{Par image}&\textbf{Par objet}&\\
+      \hline
+      \hline
+      \emph{Lenz et al.} & 73.9\% & 75.6\% & 13.6 sec\\
+      \hline
+      Saisie directe & 84.4\% & 84.9\% & \textbf{76ms}\\
+      \hline
+      Saisie directe + classif. & 85.5\% & 84.9\% & \textbf{76ms}\\
+      \hline
+      MultiGrasp & \textbf{88.0\%} & \textbf{87.1\%} & \textbf{76ms}\\
+      \hline
+    \end{tabular}
+    \caption{Résultats}
+    \label{tab:results}
+  \end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\cite{Kumra2016}}
+  89.21\% de précision
+  \begin{center}
+  \includegraphics[width=0.2\textwidth]{img/resnet_grasp.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\cite{Kumra2016}}
+  \begin{center}
+  \includegraphics[width=0.4\textwidth]{img/resnet_grasp.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Références}
+  \begin{itemize}
+  \item \fullcite{Redmon2015Grasp}
+  \item \fullcite{Kumra2016}
+  \end{itemize}
 \end{frame}
 
 \section{Questions}
-\begin{frame}
-  \frametitle{Questions}
-  
-\end{frame}
 
 \begin{frame}
   \frametitle{\emph{Maxpool}}
@@ -173,6 +268,15 @@ Université Laval \\
     \includegraphics[width=0.8\textwidth]{img/maxpool.jpeg}
     \caption{Opération \emph{Maxpool}}
     \label{fig:maxpool}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\emph{ReLU}}
+  \emph{Rectified Linear Unit}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/relu.png}
   \end{figure}
 \end{frame}
 
