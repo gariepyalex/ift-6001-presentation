@@ -66,6 +66,14 @@ Université Laval \\
   \end{figure}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Jeu de données Cornell}
+  1035 images RGBD de 280 différent objets dans 16 catégories
+  \begin{center}
+  \includegraphics[width=0.75\textwidth]{img/cornell.png}
+  \end{center}
+\end{frame}
+
 \section{Réseau de neurones à convolution}
 \begin{frame}
   \frametitle{Réseau AlexNet}
@@ -117,13 +125,6 @@ Université Laval \\
 \end{frame}
 
 \section{Architectures pour la saisie d'objets}
-\begin{frame}
-  \frametitle{Jeu de données Cornell}
-  1035 images RGBD de 280 différent objets dans 16 catégories
-  \begin{center}
-  \includegraphics[width=0.75\textwidth]{img/cornell.png}
-  \end{center}
-\end{frame}
 
 \begin{frame}
   \frametitle{Saisie directe}
@@ -167,17 +168,6 @@ Université Laval \\
   \end{figure}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Détection multiple (\emph{MultiGrasp})}
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{img/direct_vs_multi.png}
-    \caption{Comparaison de la saisie directe (en haut) et de \emph{Multigrasp}
-      (en bas)}
-    \label{fig:multigrasp_comp}
-  \end{figure}
-\end{frame}
-
 \section{Détails d'entraînement}
 \begin{frame}
   \frametitle{Pré-entraînement}
@@ -198,7 +188,6 @@ Université Laval \\
   \end{enumerate}
 \end{frame}
 
-\section{Résultats}
 \begin{frame}
   \frametitle{Métrique d'évaluation}
   Bonne saisie si:
@@ -212,6 +201,7 @@ Université Laval \\
   \end{align*}
 \end{frame}
 
+\section{Résultats}
 \begin{frame}
   \frametitle{Résultats}
   \begin{table}
@@ -234,6 +224,17 @@ Université Laval \\
     \caption{Résultats}
     \label{tab:results}
   \end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Détection multiple (\emph{MultiGrasp})}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/direct_vs_multi.png}
+    \caption{Comparaison de la saisie directe (en haut) et de \emph{Multigrasp}
+      (en bas)}
+    \label{fig:multigrasp_comp}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
